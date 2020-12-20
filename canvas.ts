@@ -140,6 +140,10 @@ export default class Context extends Canvas {
     bresenham(toX, toY, fromX, toY, this.set);
     bresenham(fromX, toY, fromX, fromY, this.set);
   }
+
+  lineTo(x: number, y: number) {
+    addPoint(this._matrix, this._currentPath, x, y, true);
+  }
 }
 
 function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
