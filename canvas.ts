@@ -144,6 +144,30 @@ export default class Context extends Canvas {
   lineTo(x: number, y: number) {
     addPoint(this._matrix, this._currentPath, x, y, true);
   }
+
+  arc(
+    h: number,
+    k: number,
+    r: number,
+    th1: number,
+    th2: number,
+    anticlockwise?: boolean,
+  ) {
+    var x: number, y: number;
+    var dth = Math.abs(Math.acos(1 / r) - Math.acos(2 / r));
+    if (anticlockwise) {
+      var tempth = th2;
+      th2 = th1 + 2 * Math.PI;
+      th1 = tempth;
+    }
+    th1 = th1 % (2 * Math.PI);
+    if (th2 < th1) th2 = th2 + 2 * Math.PI;
+    for (var th = th1; th <= th2; th = th + dth) {
+      y = clamp(r * Math.sin(th) + k, 0, this.height);
+      x = clamp(r * Math.cos(th) + h, 0, this.width);
+      addPoint(this._matrix, this._currentPath, x, y, true);
+    }
+  }
 }
 
 function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
