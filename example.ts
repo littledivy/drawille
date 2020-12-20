@@ -1,6 +1,6 @@
 import Canvas from "./canvas.ts";
 
-let canvas = new Canvas(160, 160);
+let canvas = new Canvas();
 let c = canvas.getContext("2d");
 
 var n = 20;
@@ -12,14 +12,11 @@ var sin = Math.sin;
 var cos = Math.cos;
 
 var sunX = canvas.width - 20;
+var sunData = c.getImageData(sunX, 1, 15, 20);
+
 function draw() {
   var w = canvas.width / 2;
   var start = performance.now();
-
-  // Test performance
-  // c.fillRect(-100, -100, 5000, 5000);
-  // var end = now();
-  // console.log(end - start);
 
   c.clearRect(0, 0, canvas.width, canvas.height);
   c.save();
@@ -42,8 +39,10 @@ function draw() {
   }
   c.restore();
 
-  sunX = (sunX + 1) % canvas.width;
   c.strokeRect(0, 0, canvas.width, canvas.height);
+
+  sunX = (sunX + 1) % canvas.width;
+  c.putImageData(sunData, sunX, 1);
 
   console.log(c.toString());
 }

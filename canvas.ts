@@ -202,6 +202,42 @@ export default class Context extends Canvas {
       height: sh,
     } as ImageData;
   }
+
+  putImageData(
+    imageData: ImageData,
+    dx: number,
+    dy: number,
+    dirtyX?: number,
+    dirtyY?: number,
+    dirtyWidth?: number,
+    dirtyHeight?: number,
+  ) {
+    let delimiter = "\n";
+    let data = imageData.data.split(delimiter);
+    let height = imageData.height;
+    let width = imageData.width;
+    dirtyX = dirtyX || 0;
+    dirtyY = dirtyY || 0;
+    dirtyWidth = dirtyWidth !== undefined ? dirtyWidth : width;
+    dirtyHeight = dirtyHeight !== undefined ? dirtyHeight : height;
+
+    dirtyX = Math.floor(dirtyX / 2);
+    dirtyY = Math.floor(dirtyY / 4);
+    width = Math.floor(width / 2);
+    height = Math.floor(height / 4);
+    dirtyWidth = Math.floor(dirtyWidth / 2);
+    dirtyHeight = Math.floor(dirtyHeight / 4);
+
+    var limitBottom = dirtyY + dirtyHeight;
+    var limitRight = dirtyX + dirtyWidth;
+    for (var y = dirtyY; y < limitBottom; y++) {
+      for (var x = dirtyX; x < limitRight; x++) {
+        if (data[y][x] !== " ") {
+          this.fillRect(x + dx, y + dy, 1, 1);
+        }
+      }
+    }
+  }
 }
 
 function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
