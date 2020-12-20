@@ -168,6 +168,9 @@ export default class Context extends Canvas {
       addPoint(this._matrix, this._currentPath, x, y, true);
     }
   }
+
+  // Web compatibility :D
+  fillText(text: string, x: number, y: number, maxWidth: number) {}
 }
 
 function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
