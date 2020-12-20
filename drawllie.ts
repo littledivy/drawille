@@ -8,24 +8,33 @@ const map = [
 ];
 
 class Canvas {
-  constructor(width, height) {
-    this.width = width || process.stdout.columns * 2 - 2;
-    this.height = height || process.stdout.rows * 4;
+  private _width: number = 0;
+  private _height: number = 0;
+  
+  public content: Buffer;
+  constructor(width?: number, height?: number) {
+    // XXX(UNSTABLE): This is a Deno unstable feature.
+    let { columns, rows } = Deno.consoleSize(Deno.stdout.rid);
+    this.width = width || columns * 2 - 2;
+    this.height = height || rows * 4;
+    this.content = Buffer.alloc((this.width * this.height) / 8);
   }
-
-  get width() {
-    return this._width || 0;
-  }
-  set width(width) {
+  
+  set width(width: number) {
     this._width = Math.floor(width / 2) * 2;
     this.content = Buffer.alloc((this.width * this.height) / 8);
     this.clear();
   }
+  
+  get width() {
+    return this._width;
+  }
 
   get height() {
-    return this._height || 0;
+    return this._height;
   }
-  set height(height) {
+  
+  set height(height: number) {
     this._height = Math.floor(height / 4) * 4;
     this.content = Buffer.alloc((this.width * this.height) / 8);
     this.clear();
@@ -35,9 +44,9 @@ class Canvas {
     this.content.fill(0);
   }
 
-  frame(delimiter = "\n") {
+  frame(delimiter: string = "\n"): string {
     const frameWidth = this.width / 2;
-    const result = this.content.reduce((acc, cur, i) => {
+    const result = this.content.reduce((acc: string[], cur: number, i: number) => {
       if (i % frameWidth === 0) {
         acc.push(delimiter);
       }
@@ -48,7 +57,7 @@ class Canvas {
     return result.join("");
   }
 
-  set(x, y) {
+  set(x: number, y: number) {
     if (!(x >= 0 && x < this.width && y >= 0 && y < this.height)) {
       return;
     }
@@ -60,7 +69,8 @@ class Canvas {
     const mask = map[y % 4][x % 2];
     this.content[coord] |= mask;
   }
-  unset(x, y) {
+  
+  unset(x: number, y: number) {
     if (!(x >= 0 && x < this.width && y >= 0 && y < this.height)) {
       return;
     }
@@ -72,7 +82,8 @@ class Canvas {
     const mask = map[y % 4][x % 2];
     this.content[coord] &= ~mask;
   }
-  toggle(x, y) {
+  
+  toggle(x: number, y: number) {
     if (!(x >= 0 && x < this.width && y >= 0 && y < this.height)) {
       return;
     }

@@ -1,7 +1,7 @@
 import * as glMatrix from "https://esm.sh/gl-matrix@2.1.0";
-import bresenham from "https://esm.sh/bresenham";
+import bresenham from "./bresenham.ts";
 import earcut from "https://esm.sh/earcut";
-import Canvas from "./drawllie.js";
+import Canvas from "./drawllie.ts";
 
 var mat2d = glMatrix.mat2d;
 var vec2 = glMatrix.vec2;
@@ -15,7 +15,7 @@ export default class Context extends Canvas {
   _matrix = mat2d.create();
   _stack: unknown[] = [];
   _currentPath: Path[] = [];
-  constructor(width: number, height: number) {
+  constructor(width?: number, height?: number) {
     super(width, height);
   }
   save() {
