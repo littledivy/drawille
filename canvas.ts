@@ -15,6 +15,7 @@ export default class Context extends Canvas {
   _matrix = mat2d.create();
   _stack: unknown[] = [];
   _currentPath: Path[] = [];
+
   constructor(width?: number, height?: number) {
     super(width, height);
   }
@@ -54,9 +55,12 @@ export default class Context extends Canvas {
       }
     }
   }
+
+  // Web compatibility :D
   getContext(t: string) {
     return this;
   }
+
   clearRect(x: number, y: number, w: number, h: number) {
     quad(
       this._matrix,
@@ -68,6 +72,7 @@ export default class Context extends Canvas {
       [0, 0, this.width, this.height],
     );
   }
+
   fillRect(x: number, y: number, w: number, h: number) {
     quad(
       this._matrix,
@@ -79,6 +84,7 @@ export default class Context extends Canvas {
       [0, 0, this.width, this.height],
     );
   }
+
   fill() {
     if (
       this._currentPath[this._currentPath.length - 1].point !==
@@ -114,11 +120,25 @@ export default class Context extends Canvas {
       );
     }
   }
+
   toString() {
     return this.frame();
   }
+
   moveTo(x: number, y: number) {
     addPoint(this._matrix, this._currentPath, x, y, false);
+  }
+
+  strokeRect(x: number, y: number, w: number, h: number) {
+    var fromX = clamp(x, 0, this.width),
+      fromY = clamp(y, 0, this.height),
+      toX = clamp(x + w, 0, this.width),
+      toY = clamp(y + h, 0, this.height);
+
+    bresenham(fromX, fromY, toX, fromY, this.set);
+    bresenham(toX, fromY, toX, toY, this.set);
+    bresenham(toX, toY, fromX, toY, this.set);
+    bresenham(fromX, toY, fromX, fromY, this.set);
   }
 }
 
@@ -132,10 +152,11 @@ function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
 
 function clamp(value: number, min: number, max: number) {
   return Math.round(Math.min(Math.max(value, min), max));
-}/**
+}
+
+/**
 * Returns a Point type
 **/
-
 function br(p1: number[], p2: number[]) {
   return bresenham(
     Math.floor(p1[0]),
