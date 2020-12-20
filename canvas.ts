@@ -11,6 +11,12 @@ interface Path {
   stroke: boolean;
 }
 
+export interface ImageData {
+  data: string;
+  width: number;
+  height: number;
+}
+
 export default class Context extends Canvas {
   _matrix = mat2d.create();
   _stack: unknown[] = [];
@@ -134,11 +140,11 @@ export default class Context extends Canvas {
       fromY = clamp(y, 0, this.height),
       toX = clamp(x + w, 0, this.width),
       toY = clamp(y + h, 0, this.height);
-
-    bresenham(fromX, fromY, toX, fromY, this.set);
-    bresenham(toX, fromY, toX, toY, this.set);
-    bresenham(toX, toY, fromX, toY, this.set);
-    bresenham(fromX, toY, fromX, fromY, this.set);
+    let set = this.set.bind(this);
+    bresenham(fromX, fromY, toX, fromY, set);
+    bresenham(toX, fromY, toX, toY, set);
+    bresenham(toX, toY, fromX, toY, set);
+    bresenham(fromX, toY, fromX, fromY, set);
   }
 
   lineTo(x: number, y: number) {
@@ -169,8 +175,33 @@ export default class Context extends Canvas {
     }
   }
 
-  // Web compatibility :D
+  // Currently here for web compatibility :D
   fillText(text: string, x: number, y: number, maxWidth: number) {}
+  getImageData(sx?: number, sy?: number, sw?: number, sh?: number): ImageData {
+    if (!sx) sx = 0;
+    if (!sy) sy = 0;
+    if (!sw) sw = this.width;
+    if (!sh) sh = this.height;
+
+    sx = Math.floor(sx / 2);
+    sw = Math.floor(sw / 2);
+    sy = Math.floor(sy / 4);
+    sh = Math.floor(sh / 4);
+
+    let delimiter = "\n";
+    let imgdata: string[] = [];
+    let data = this.toString().split(delimiter);
+
+    for (var i = 0; i < sh; i++) {
+      imgdata.push(data[sy + i].slice(sx, sx + sw));
+    }
+
+    return {
+      data: imgdata.join(delimiter),
+      width: sw,
+      height: sh,
+    } as ImageData;
+  }
 }
 
 function addPoint(m: number, p: Path[], x: number, y: number, s: boolean) {
