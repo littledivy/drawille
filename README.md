@@ -6,5 +6,21 @@
 
 ![](examples/mouse_draw.gif)
 
-### 
+### Usage
+
+Take a look at various examples located at [`examples/`](./examples/)
+
+```typescript
+import Canvas from "https://deno.land/x/drawllie/drawllie.ts";
+
+const canvas = new Canvas();
+let ctx = ctx.getContext("2d");
+// ...
+```
+
+> Requires --unstable feature to be enabled for `Deno.consoleSize`.
+
+### License
+
+[MIT license](LICENSE)
 
