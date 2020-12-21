@@ -1,6 +1,6 @@
-## `drawllie`
+## `drawille`
 
-[HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) [Canvas](canvas.ts) on the terminal. Based on [Drawllie](https://github.com/asciimoo/drawille) [implementation](drawllie.ts).
+[HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) [Canvas](canvas.ts) on the terminal. Based on [drawille](https://github.com/asciimoo/drawille) [implementation](drawille.ts).
 
 ![](examples/sine.gif)
 
@@ -11,7 +11,7 @@
 Take a look at various examples located at [`examples/`](./examples/)
 
 ```typescript
-import Canvas from "https://deno.land/x/drawllie/drawllie.ts";
+import Canvas from "https://deno.land/x/drawille/drawille.ts";
 
 const canvas = new Canvas();
 let ctx = ctx.getContext("2d");
