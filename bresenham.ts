@@ -1,7 +1,7 @@
 // Bresenham's Line Algorithm https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 // hand ported to Typescript from https://github.com/madbence/node-bresenham
 // MIT License (c) 2014 Bence Dányi
-// MIT License (c) 2020 Divy Srivastava
+// MIT License (c) 2021 Divy Srivastava
 
 /**
 * Custom function to create a point from known points

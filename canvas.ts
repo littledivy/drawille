@@ -1,6 +1,6 @@
 import * as glMatrix from "https://esm.sh/gl-matrix@2.1.0";
 import bresenham from "./bresenham.ts";
-import earcut from "https://esm.sh/earcut";
+import earcut from "https://esm.sh/earcut@2.2.3";
 import Canvas from "./drawille.ts";
 
 var mat2d = glMatrix.mat2d;
