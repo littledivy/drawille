@@ -3,8 +3,7 @@
 
 [HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) [Canvas](canvas.ts) on the terminal. Based on [drawille](https://github.com/asciimoo/drawille) [implementation](drawille.ts).
 
-https://user-images.githubusercontent.com/34997667/127607132-77d4579b-9410-4e3c-9aee-25bd204de95c.mp4
-
+https://user-images.githubusercontent.com/34997667/127607186-8eb7ac23-ab00-48ed-a01a-90e5e262f122.mp4
 
 ### Usage
 
