@@ -47,4 +47,4 @@ function draw() {
   console.log(c.toString());
 }
 
-setInterval(draw, 1000 / 30);
+setInterval(draw, 1000 / 20);

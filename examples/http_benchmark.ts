@@ -24,12 +24,12 @@ async function renderFrame() {
   end = Date.now();
   dataArray.push(end - start);
   for (var i = 0; i < dataArray.length; i++) {
-    barHeight = dataArray[i] / 10;
-    ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+    barHeight = dataArray[i];
+    ctx.strokeRect(x, HEIGHT - barHeight, barWidth, barHeight);
     x += barWidth + 1;
   }
   console.log(ctx.toString());
   console.log(`Response time: ${end - start} ms`);
 }
 
-setInterval(renderFrame, 1000);
+setInterval(renderFrame, 200);

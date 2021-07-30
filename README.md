@@ -1,10 +1,11 @@
+
 ## `drawille`
 
 [HTML5](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) [Canvas](canvas.ts) on the terminal. Based on [drawille](https://github.com/asciimoo/drawille) [implementation](drawille.ts).
 
-![](examples/sine.gif)
 
-![](examples/mouse_draw.gif)
+https://user-images.githubusercontent.com/34997667/127534013-5b493652-28ac-47a8-9c7c-e914e2ba218d.mp4
+
 
 ### Usage
 

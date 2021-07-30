@@ -1,6 +1,6 @@
 import Canvas from "../canvas.ts";
 
-let c = new Canvas(150, 100);
+let c = new Canvas();
 let ctx = c.getContext("2d");
 let w = c.width;
 let h = c.height / 2;

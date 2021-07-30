@@ -1,35 +1,32 @@
-// NOTE: Autopilot is an --unstable plugin. We're using it for global mouse movement detection.
-//       Ideally one would use an ncurses-like library.
-import {
-  runMousePosition,
-  runScreenSize,
-} from "https://deno.land/x/autopilot/autopilot_plugin/index.ts";
+// NOTE: autopilot is an --unstable plugin. We're using it for global mouse movement detection.
+import { init } from "https://deno.land/x/mouse/mod.ts";
+import Pilot from "https://deno.land/x/autopilot/mod.ts";
 import Canvas from "../canvas.ts";
 
-let c = new Canvas();
-let ctx = c.getContext("2d");
+const canvas = new Canvas();
+const ctx = canvas.getContext("2d");
 
-interface Screen {
-  width: number;
-  height: number;
-}
+const pilot = new Pilot();
+const dimensions = pilot.screenSize();
 
-let dimensions: Screen = JSON.parse(await runScreenSize());
+let isDrawing = true;
+let mouseDown = false;
 
-interface Point {
-  x: number;
-  y: number;
-}
+window.addEventListener("click", (e) => {
+  // @ts-ignore
+  if(e.buttons == 1) isDrawing = !isDrawing;
+});
 
-let m: Point;
+window.addEventListener("mousemove", (e) => {
+  if(isDrawing) {
+    // @ts-ignore Types for MouseEvent are missing
+    let x = (e.screenX / dimensions.width) * canvas.width;
+    // @ts-ignore Types for MouseEvent are missing
+    let y = (e.screenY / dimensions.height) * canvas.height;
+    ctx.fillRect(x, y, 2, 2);
+    ctx.stroke();
+    console.log(ctx.toString());
+  }
+});
 
-setInterval(async () => {
-  m = JSON.parse(await runMousePosition());
-
-  let x = (m.x / dimensions.width) * c.width;
-  let y = (m.y / dimensions.height) * c.height;
-  ctx.fillRect(x, y, 2, 2);
-  ctx.stroke();
-
-  console.log(ctx.toString());
-}, 90);
+await init();
