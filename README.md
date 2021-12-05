@@ -13,7 +13,7 @@ Take a look at various examples located at [`examples/`](./examples/)
 import Canvas from "https://deno.land/x/drawille/drawille.ts";
 
 const canvas = new Canvas();
-let ctx = ctx.getContext("2d");
+let ctx = canvas.getContext("2d");
 // ...
 ```
 
@@ -22,4 +22,3 @@ let ctx = ctx.getContext("2d");
 ### License
 
 [MIT license](LICENSE)
-
